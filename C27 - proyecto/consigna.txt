@@ -1,0 +1,12 @@
+Ejercicio:
+
+Escriba un proyecto que desarrolle un artefacto de software que tome tres parámetros:
+un archivo conteniendo números enteros, y dos números enteros mayores o iguales que 0.
+
+Para ello, debemos implementar: 
+a. una función que lea el archivo y construya una lista con los datos contenidos en el archivo
+b. una función que calcule el promedio de los valores contenidos entre los dos enteros.
+
+Nota: ambos enteros deben ser necesariamente, si el segundo entero es menor que el primero, el valor es 0, si el primer entero es mayor que la longitud de la lista, el valor es 0, y si el segundo entero es mayor que la longitud de la lista, entonces el valor corresponderá al cálculo hasta la posición final.
+
+Observaciones: ¡Usen excepciones y argumentos para el programa!

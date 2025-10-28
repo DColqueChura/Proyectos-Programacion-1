@@ -1,0 +1,22 @@
+
+ERROR 2:
+python3 main.py input_num.txt 0 Y
+ValueError: invalid literal for int() with base 10: 'Y'
+
+ERROR 3:
+python3 main.py 0 8	
+IndexError: list index out of range
+
+ERROR 4:
+python3 main.py input_num.txt
+IndexError: list index out of range
+
+ERROR 5:
+python3 main.py
+IndexError: list index out of range
+
+ERROR 6:
+python3 main.py input.txt 0 8
+FileNotFoundError: [Errno 2] No such file or directory: 'input.txt'
+
+
