@@ -2,9 +2,11 @@
 import sys
 import toml
 import json
+import csv
 
 from toml import TomlDecodeError
 from json import JSONDecodeError
+from csv import DictReader, DictWriter
 
 from .errors import ErrorAperturaArchivo, ErrorDesconocido
 
@@ -84,3 +86,29 @@ def extraer_entrada_salida(config_data):
         sys.stderr.write(f"Error desconocido al extraer campos: {e}.\n")
         sys.exit(-3)
         
+
+def exigir_csv(archivo_entrada, archivo_salida):
+    if not archivo_entrada.lower().endswith('.csv'):
+        sys.stderr.write("Error: El archivo de entrada debe ser un archivo CSV.\n")
+        sys.exit(-4)
+    
+    # El archivo de salida puede no ser csv, no se exige nada aquí
+    filename_out = archivo_salida.rsplit('.', 1)[0] + '.csv'
+    return filename_out
+
+def procesar_csv(file_in, file_out):
+    try:
+        with open(file_in, 'r', encoding = 'utf-8', newline= '') as input_csv, \
+                open(file_out, 'w', encoding ='utf-8', newline='') as output_csv:
+
+            lector = csv.DictReader(input_csv)
+            _fieldnames = [ (header or '').strip() for header in (lector.fieldnames or []) ]
+
+           # _fieldnames = list(encontrados)
+            escritor = csv.DictWriter(output_csv, fieldnames=_fieldnames)
+            escritor.writeheader()    # Escribe los nombres de las columnas
+            for fila in lector:
+                escritor.writerow(fila)
+            
+    except Exception as e:
+        raise ErrorDesconocido(str(e))

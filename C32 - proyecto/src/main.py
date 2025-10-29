@@ -12,14 +12,23 @@ con anterioridad. Ejemplo de archivo de configuración en formato toml:
 entrada = “nombre_del_archivo_de_entrada” 
 salida = “nombre_del_archivo_de_salida”
 
-Aceptá dos esquemas de config: plano (entrada/salida) o anidado (configuracion.entrada/salida).
+Observaciones:
+* Aceptá dos esquemas de config: plano (entrada/salida) o anidado (configuracion.entrada/salida).
+* El formato del archivo de configuración puede ser toml o json.
+* [Estricto formato] El archivo de entrada y salida solo puede ser csv.
+* [Flexible formato] El archivo de entrada y salida puede No ser csv, pero el contenido debe ser csv.
+
+Se elije el esquema de manejo estricto formato. Para que sea inequívoco y predecible.
+* Se pide que el archivo de entrada sea csv.
+* El archivo de salida puede no serlo.
+* Si se da el caso anterior, se tomará solo el nombre del archivo de salida.
 '''
 
 import sys
-from .funciones import obtener_args, leer_archivo, extraer_entrada_salida
+from .funciones import obtener_args, leer_archivo, extraer_entrada_salida, exigir_csv, procesar_csv
 from .errors import ErrorAperturaArchivo, ErrorDesconocido 
 
-# Recordar Ejecución: python3 -m src.main <configuracion> <formato>
+# Recordar Ejecución: python3 -m src.main src/<configuracion> <formato>
 
 # Códigos de error:
 # -1: Cantidad de argumentos incorrecta (no lo usaremos si aplicamos defaults)
@@ -48,6 +57,11 @@ def main():
     
     print(f"Archivo de entrada: {entrada}")
     print(f"Archivo de salida: {salida}")
+
+    salida = exigir_csv(entrada, salida)
+
+    # Procesar archivo CSV
+    procesar_csv(entrada, salida)
 
 if __name__ == '__main__':
     main()

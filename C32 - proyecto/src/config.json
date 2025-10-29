@@ -1,5 +1,5 @@
 
 {
-  "entrada": "in.txt",
-  "salida": "out.txt"
+  "entrada": "src/in.csv",
+  "salida": "src/out.csv"
 }
