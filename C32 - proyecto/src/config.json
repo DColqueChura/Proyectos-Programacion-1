@@ -1,5 +1,7 @@
-
 {
-  "entrada": "src/in.csv",
-  "salida": "src/out.csv"
+  "configuracion": {
+    "entrada": "src/in.csv",
+    "salida": "src/out.csv"
+  }
 }
+
