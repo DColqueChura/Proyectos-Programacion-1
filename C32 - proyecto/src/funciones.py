@@ -3,6 +3,7 @@ import sys
 import toml
 import json
 import csv
+import argparse
 
 from toml import TomlDecodeError
 from json import JSONDecodeError
@@ -17,21 +18,31 @@ from .errors import ErrorAperturaArchivo, ErrorDesconocido
 # -4: Error de apertura/lectura de archivo (incluye decode)
 
 
-def obtener_args():
+def obtener_args(argv=None):    #si argv es None, argparse toma sys.argv[1:]).
     """
     Reglas:
     - Sin args -> defaults: config.toml toml
-    - Con 2 args -> archivo y formato
-    - Con otro número -> error -1
+    - Con 2 args -> archivo y formato}
+    - Con otro número -> argparse se encarga del error automáticamente.
     """
-    n = len(sys.argv)
-    if n == 1:
-        return "config.toml", "toml"
-    elif n == 3:
-        return sys.argv[1], sys.argv[2].lower()
-    else:
-        sys.stderr.write("Error de Invocación: se deben recibir 2 argumentos (archivo y formato) o ninguno para usar defaults.\n")
-        print("Se espera: <archivo> <toml|json>  |  (sin argumentos usa config.toml toml)")
+
+    parser = argparse.ArgumentParser(
+        prog="Mi programa con argumentos",
+        description="Sirve como ejemplo de cómo usar la biblioteca argparse.",
+        epilog="Ejemplo: python -m programa.programa --config_file path/al/archivo/de/configuracion.json --formato json"
+    )
+    parser.add_argument("--config_file", type=str, default='./config.toml',
+                        help='Path al archivo de configuración.')
+    parser.add_argument("--formato", type=str, choices=["toml", "json"],
+                        default="toml", help="Formato del archivo de configuración.")
+    
+    # Si argv es None, argparse usa sys.argv automáticamente
+    args = parser.parse_args(argv)
+    try:
+        return args.config_file, (args.formato).lower()
+
+    except SystemExit as e:
+        # argparse ya imprimió el error
         sys.exit(-1)
 
 """
@@ -39,8 +50,8 @@ def obtener_args():
     Lanza excepciones propias en caso de error.
     Devuelve un diccionario con la configuración.
 """
-def leer_archivo(file, formato):
-    # Si se prefiere validar formato SOLO aquí, descomentar:
+def leer_archivo(file, formato: str) -> dict:
+    # Si se prefiere validar formato SOLO aquí (y no en main), descomentar:
     # if formato not in ("toml", "json"):
     #     sys.stderr.write("Error: el segundo argumento debe ser 'toml' o 'json'.\n")
     #     sys.exit(-2)
@@ -72,7 +83,7 @@ def leer_archivo(file, formato):
         pero si esa clave no existe, devuelve el valor por defecto (sin lanzar error).
     2. .get() evita KeyError.
 '''
-def extraer_entrada_salida(config_data):
+def extraer_entrada_salida(config_data: dict):
     try: 
         base = config_data.get("configuracion", config_data)
         entrada = base["entrada"]
