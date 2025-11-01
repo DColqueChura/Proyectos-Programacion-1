@@ -1,4 +1,7 @@
 import unittest
+import tempfile
+import os
+
 from src.errors import ErrorAperturaArchivo, ErrorDesconocido
 from src.funciones import obtener_args, leer_archivo, extraer_entrada_salida, exigir_csv, procesar_csv
 
@@ -43,16 +46,75 @@ class Test_leer_archivo(unittest.TestCase):
         with self.assertRaises(ErrorAperturaArchivo):
             leer_archivo('src/no_existe.toml', 'toml')
 
-'''
+
 class Test_extraer_entrada_salida(unittest.TestCase):
-    def 
+    def test_extraer_entrada_salida_valido(self):
+        config_data ={
+            "configuracion": {
+                "entrada": "src/in.csv",
+                "salida": "src/out.csv"
+            }
+        }
+        entrada, salida = extraer_entrada_salida(config_data)
+        self.assertEqual(entrada, 'src/in.csv')
+        self.assertEqual(salida, 'src/out.csv')
+    
+    def test_extraer_entrada_salida_no_existente(self):
+        config_data ={
+            "configuracion": {
+                "entrada": "src/in.csv",
+                #"salida": "src/out.csv"
+            }
+        }
+        with self.assertRaises(SystemExit) as cm:
+            extraer_entrada_salida(config_data)
+            self.assertEqual(cm.exception.code, -4)
 
-
+    def test_extraer_entrada_salida_invalido(self):
+        with self.assertRaises(SystemExit) as cm:
+            extraer_entrada_salida(config_data={})
+            self.assertEqual(cm.exception.code, -3)
+    
 
 class Test_exigir_csv(unittest.TestCase):
+    def test_exigir_csv_valido(self):
+        try:
+            exigir_csv('data/input.csv', 'data/output.csv')
+        except SystemExit:
+            self.fail("exigir_csv levantó un SystemExit inexplicablemente!")
+    
+    def test_exigir_csv_salida_No_csv(self):
+        try:
+            exigir_csv('data/input.csv', 'data/output.txt')
+        except SystemExit:
+            self.fail("exigir_csv levantó un SystemExit inexplicablemente!")
+
 
 class Test_procesar_csv(unittest.TestCase):
-'''
+    def test_procesar_csv_valido(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            input_file = os.path.join(tmpdir, "input.csv")
+            output_file = os.path.join(tmpdir, "output.csv")
+
+            # Crear CSV de prueba
+            with open(input_file, "w", encoding="utf-8", newline="") as f:
+                f.write("col1,col2,col3\n")
+                f.write("1,2,3\n")
+                f.write("4,5,6\n")
+
+            # Ejecutar función
+            try:
+                procesar_csv(input_file, output_file)
+            except Exception as e:
+                self.fail(f"procesar_csv lanzó una excepción inesperada: {e}")
+
+            # Verificar salida
+            self.assertTrue(os.path.exists(output_file), "No se creó el archivo de salida")
+
+            with open(output_file, "r", encoding="utf-8") as f:
+                content = f.read()
+                self.assertIn("col1,col2,col3", content)
+
 
 if __name__ == '__main__':
     unittest.main()
