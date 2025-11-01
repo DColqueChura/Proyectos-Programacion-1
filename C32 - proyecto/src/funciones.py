@@ -97,7 +97,10 @@ def extraer_entrada_salida(config_data: dict):
         sys.stderr.write(f"Error desconocido al extraer campos: {e}.\n")
         sys.exit(-3)
         
-
+'''
+La funcion recibe el nombre del archivo de entrada y salida.
+Siempre debe ser CSV el archivo de entrada. 
+'''
 def exigir_csv(archivo_entrada, archivo_salida):
     if not archivo_entrada.lower().endswith('.csv'):
         sys.stderr.write("Error: El archivo de entrada debe ser un archivo CSV.\n")
@@ -107,6 +110,10 @@ def exigir_csv(archivo_entrada, archivo_salida):
     filename_out = archivo_salida.rsplit('.', 1)[0] + '.csv'
     return filename_out
 
+'''
+    Procesa el archivo CSV de entrada y escribe en el archivo CSV de salida.
+    Actualmente, solo copia el contenido.
+'''
 def procesar_csv(file_in, file_out):
     try:
         with open(file_in, 'r', encoding = 'utf-8', newline= '') as input_csv, \
