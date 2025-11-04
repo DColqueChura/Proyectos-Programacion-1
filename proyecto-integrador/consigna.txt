@@ -1,0 +1,18 @@
+PROYECTO FINAL
+
+A esta altura tenemos nuestro proyecto que permite procesar un archivo
+de ventas, agrupándolas por producto y que recibe los nombres de archivos
+de entrada y salida usando una configuración almacenada en un archivo con
+formato toml o json…
+
+
+… implemente la funcionalidad de ordenamiento usando el algoritmo
+mergesort de forma que el resultado final sea guardado en orden decreciente
+usando como clave de ordenamiento el importe total (valor total en mi tabla csv).
+
+---------------------------
+Desarrollo
+
+
+Archivo inicial: Fecha,Producto,Cantidad,ValorUnitario
+Archivo final: Producto, Fecha de Inicio, Fecha Final, Cantidad, Valor Total

@@ -1,0 +1,3 @@
+[configuracion]
+entrada = "src/in.csv"
+salida  = "src/out.csv"

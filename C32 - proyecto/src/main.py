@@ -28,7 +28,7 @@ import sys
 from .funciones import obtener_args, leer_archivo, extraer_entrada_salida, exigir_csv, procesar_csv
 from .errors import ErrorAperturaArchivo, ErrorDesconocido 
 
-# Recordar Ejecución: python3 -m src.main src/<configuracion> <formato>
+# Recordar Ejecución: python3 -m src.main --config_file src/config --formato json
 
 # Códigos de error:
 # -1: Cantidad de argumentos incorrecta (no lo usaremos si aplicamos defaults)
