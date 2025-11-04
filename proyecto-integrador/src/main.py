@@ -2,6 +2,7 @@ import sys
 
 from .funciones_toml_json import obtener_args, leer_archivo, extraer_entrada_salida, exigir_csv, procesar_csv
 from .funciones_csv import procesar_archivo
+from .funciones_orden import merge_sort
 from .errors import ErrorAperturaArchivo, ErrorNombre, ErrorDesconocido
 
 # Recordar Ejecución: python3 -m src.main --config_file src/config --formato json
@@ -13,9 +14,57 @@ from .errors import ErrorAperturaArchivo, ErrorNombre, ErrorDesconocido
 # -4: Error de apertura/lectura de archivo (incluye decode)
 
 def main():
-    configuracion_file, formato = obtener_args()
-    print(f"Archivo de configuración: {configuracion_file}")
-    print(f"Formato de configuración: {formato}")
 
+    #######################
+    ## Procesamiento TOML/JSON
+    #######################
+
+    configuracion_file, formato = obtener_args()
+    #print(f"Archivo de configuración : {configuracion_file}")
+    #print(f"Formato de configuración : {formato}")  
+
+    if formato not in ("toml", "json"):
+        sys.stderr.write(f"Error: formato inválido \n")
+        sys.exit(-2)
+
+    try:
+        archivo_formateado = leer_archivo(configuracion_file, formato)
+        entrada, salida = extraer_entrada_salida(archivo_formateado)
+
+    except ErrorAperturaArchivo as e:
+        sys.stderr.write(f"ErrorAperturaArchivo: {e}\n")
+        sys.exit(-4)
+
+    except ErrorDesconocido as e:
+        sys.stderr.write(f"ErrorDesconocido: {e}\n")
+        sys.exit(-3)
+
+    # Extracción de paths
+    print(f"Archivo de entrada: {entrada}")
+    print(f"Archivo de salida: {salida}")
+
+    ######################
+    # Procesamiento CSV
+    #######################
+
+    # Validar que los archivos sean CSV
+    exigir_csv(entrada, salida)
+
+    try:
+        procesar_archivo(entrada)
+
+    except (ErrorAperturaArchivo, ErrorDesconocido):
+        # Los mensajes los escribe procesar_archivo por stderr
+        sys.exit(-4)    
+    except Exception:
+        sys.stderr.write("Error desconocido.\n")
+        sys.exit(-3)
+
+    #############################################
+    # Ordenamiento MergeSort (en orden decreciente)
+    #############################################
+
+
+    
 if __name__ == '__main__':
     main()

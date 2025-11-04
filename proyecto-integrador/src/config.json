@@ -1,6 +1,6 @@
 {
   "configuracion": {
-    "entrada": "src/in.csv",
+    "entrada": "src/ventas.csv",
     "salida": "src/out.csv"
   }
 }

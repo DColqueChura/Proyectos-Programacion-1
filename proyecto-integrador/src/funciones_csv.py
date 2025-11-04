@@ -5,9 +5,11 @@ from decimal import Decimal, InvalidOperation
 from .errors import ErrorAperturaArchivo, ErrorNombre, ErrorDesconocido
 
 def procesar_archivo(file: str):
+    ''' Esta comprobación se hace en la función main().
     
     if not file.endswith('.csv'):
         raise ErrorNombre(f"Formato incorrecto: {file}\n")
+    '''
     
     try:
         filename_out = file.rsplit('.', 1)[0] + '_por_producto.csv'

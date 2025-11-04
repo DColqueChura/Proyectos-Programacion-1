@@ -56,6 +56,10 @@ def leer_archivo(file, formato: str) -> dict:
     #     sys.stderr.write("Error: el segundo argumento debe ser 'toml' o 'json'.\n")
     #     sys.exit(-2)
 
+    # Si no viene extensión, se la agrego
+    if not file.endswith(f".{formato}"):
+        file = f"{file}.{formato}"
+
     try:
         with open(file, 'r', encoding="utf-8") as f:
             if formato == "toml":
@@ -68,7 +72,7 @@ def leer_archivo(file, formato: str) -> dict:
                 sys.exit(-2)
     except (FileNotFoundError, IOError, TomlDecodeError, JSONDecodeError) as e:
         # Propago el except para que main decida el código de salida
-        raise ErrorAperturaArchivo from e
+        raise ErrorAperturaArchivo(str(e)) from e
     except Exception as e:
         raise ErrorDesconocido from e
     
