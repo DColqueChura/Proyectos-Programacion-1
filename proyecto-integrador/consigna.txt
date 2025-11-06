@@ -8,7 +8,7 @@ formato toml o json…
 
 … implemente la funcionalidad de ordenamiento usando el algoritmo
 mergesort de forma que el resultado final sea guardado en orden decreciente
-usando como clave de ordenamiento el importe total (valor total en mi tabla csv).
+usando como clave de ordenamiento el importe total ("valor total" en mi tabla csv).
 
 ---------------------------
 Desarrollo

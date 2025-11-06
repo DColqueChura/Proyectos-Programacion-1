@@ -1,0 +1,6 @@
+Fecha,Producto,Cantidad,ValorUnitario
+2025-01-03,Manzanas,10,0.50
+2025-01-05,Peras,5,0.80
+2025-01-08,Manzanas,7,0.55
+2025-01-10,Naranjas,12,0.60
+2025-01-12,Peras,9,0.85

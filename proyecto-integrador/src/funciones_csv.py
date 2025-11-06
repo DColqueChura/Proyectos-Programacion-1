@@ -4,7 +4,16 @@ from datetime import datetime
 from decimal import Decimal, InvalidOperation
 from .errors import ErrorAperturaArchivo, ErrorNombre, ErrorDesconocido
 
-def procesar_archivo(file: str):
+def clave_valor_total(fila)-> Decimal:
+    # Valor Total viene como string del CSV
+    valor = fila.get('Valor Total', '0').replace(',', '.').strip()
+    try:
+        return Decimal(valor)
+    except InvalidOperation:
+        return Decimal('0.0')
+
+
+def procesar_archivo(file: str)-> str:
     ''' Esta comprobación se hace en la función main().
     
     if not file.endswith('.csv'):
@@ -84,7 +93,7 @@ def procesar_archivo(file: str):
                     'Cantidad': data['cantidad'],
                     'Valor Total': f"{total_2d}",
                 })
-        return
+        return filename_out
     
     except (ErrorAperturaArchivo, ErrorNombre):
         # Dejo pasar las excepciones propias sin convertirlas a ErrorDesconocido
@@ -105,3 +114,38 @@ def procesar_archivo(file: str):
         sys.stderr.write("Error desconocido\n")
         raise ErrorDesconocido(str(e))
     
+
+def leer_csv(file: str)-> list[dict]:
+    ''' Lee un archivo CSV y devuelve una lista de diccionarios representando las filas.
+    Cada diccionario tiene como claves los nombres de las columnas.
+    '''
+    try:
+        with open(file, 'r', encoding='utf-8', newline='') as input_csv:
+            lector = csv.DictReader(input_csv)
+            return [fila for fila in lector]
+    except Exception as e:
+        sys.stderr.write(f"Error al leer el archivo CSV {file}: {e}\n")
+        raise ErrorAperturaArchivo(f"No se pudo leer el archivo CSV: {file}\n") 
+    
+
+def escribir_csv_desde_diccionarios(filas, ruta_salida: str)-> str:
+    """
+    Escribe un CSV a partir de una lista de diccionarios.
+    Devuelve la ruta del archivo generado.
+    """
+    # Se define el orden de las columnas.
+    fieldnames = ['Producto', 'Fecha de Inicio', 'Fecha Final', 'Cantidad', 'Valor Total']
+
+    # Si la lista está vacía, igual generamos el archivo con solo encabezados o vacío
+    if not filas:
+        with open(ruta_salida, 'w', encoding='utf-8', newline='') as f:
+            pass
+        return ruta_salida
+
+    with open(ruta_salida, 'w', encoding='utf-8', newline='') as f:
+        escritor = csv.DictWriter(f, fieldnames=fieldnames)
+        escritor.writeheader()
+        for fila in filas:
+            escritor.writerow(fila)
+
+    return 
