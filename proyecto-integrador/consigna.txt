@@ -1,0 +1,32 @@
+Repositorio en GitHub:  https://github.com/DColqueChura/Proyectos-Programacion-1
+
+PROYECTO FINAL
+
+A esta altura tenemos nuestro proyecto que permite procesar un archivo
+de ventas, agrupándolas por producto y que recibe los nombres de archivos
+de entrada y salida usando una configuración almacenada en un archivo con
+formato toml o json…
+
+
+… implemente la funcionalidad de ordenamiento usando el algoritmo
+mergesort de forma que el resultado final sea guardado en orden decreciente
+usando como clave de ordenamiento el importe total ("valor total" en mi tabla csv).
+
+---------------------------
+Desarrollo
+
+En el archivo de configuración, se encuentran los nombres de los archivos
+de entrada y salida.
+
+* Archivo csv entrada: Fecha,Producto,Cantidad,ValorUnitario
+* Archivo csv salida: Producto, Fecha de Inicio, Fecha Final, Cantidad, Valor Total
+
+---------------------------
+RUN
+[Se corren los comandos desde 
+        E:\UNRN\2025 PROG-1\Proyectos-Programacion-1\proyecto-integrador> ]
+
+Para correr el archivo src/main:    python3 -m src.main --config_file src/<configuracion> --formato <formato>
+
+Para correr TODOS los test:         python -m unittest discover -s test -p "test_*.py"
+Para correr UN test en específico:  python -m unittest discover -s test/<subcarpeta de test> -p "test_*.py"

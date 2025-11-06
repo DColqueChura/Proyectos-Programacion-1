@@ -1,0 +1,7 @@
+{
+  "configuracion": {
+    "entrada": "src/ventas.csv",
+    "salida": "src/out.csv"
+  }
+}
+
