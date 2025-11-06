@@ -13,6 +13,18 @@ usando como clave de ordenamiento el importe total ("valor total" en mi tabla cs
 ---------------------------
 Desarrollo
 
+En el archivo de configuración, se encuentran los nombres de los archivos
+de entrada y salida.
 
-Archivo inicial: Fecha,Producto,Cantidad,ValorUnitario
-Archivo final: Producto, Fecha de Inicio, Fecha Final, Cantidad, Valor Total
+* Archivo csv entrada: Fecha,Producto,Cantidad,ValorUnitario
+* Archivo csv salida: Producto, Fecha de Inicio, Fecha Final, Cantidad, Valor Total
+
+---------------------------
+RUN
+[Se corren los comandos desde 
+        E:\UNRN\2025 PROG-1\Proyectos-Programacion-1\proyecto-integrador> ]
+
+Para correr el archivo src/main:    python3 -m src.main --config_file src/<configuracion> --formato <formato>
+
+Para correr TODOS los test:         python -m unittest discover -s test -p "test_*.py"
+Para correr UN test en específico:  python -m unittest discover -s test/<subcarpeta de test> -p "test_*.py"

@@ -95,10 +95,10 @@ def procesar_archivo(file: str)-> str:
                 })
         return filename_out
     
-    except (ErrorAperturaArchivo, ErrorNombre):
+    except ErrorNombre:
         # Dejo pasar las excepciones propias sin convertirlas a ErrorDesconocido
-        raise
-    except FileNotFoundError:
+        raise ErrorNombre("Formato incorrecto del nombre del archivo.\n")
+    except (ErrorAperturaArchivo, FileNotFoundError):
         sys.stderr.write("Error de input: no existe el archivo " + file + '\n')
         raise ErrorAperturaArchivo(f"No existe: {file}\n")
     
@@ -134,13 +134,16 @@ def escribir_csv_desde_diccionarios(filas, ruta_salida: str)-> str:
     Devuelve la ruta del archivo generado.
     """
     # Se define el orden de las columnas.
-    fieldnames = ['Producto', 'Fecha de Inicio', 'Fecha Final', 'Cantidad', 'Valor Total']
+    #fieldnames = ['Producto', 'Fecha de Inicio', 'Fecha Final', 'Cantidad', 'Valor Total']
 
     # Si la lista está vacía, igual generamos el archivo con solo encabezados o vacío
     if not filas:
         with open(ruta_salida, 'w', encoding='utf-8', newline='') as f:
             pass
         return ruta_salida
+    
+    # Tomar las claves del primer diccionario como encabezados
+    fieldnames = list(filas[0].keys())
 
     with open(ruta_salida, 'w', encoding='utf-8', newline='') as f:
         escritor = csv.DictWriter(f, fieldnames=fieldnames)

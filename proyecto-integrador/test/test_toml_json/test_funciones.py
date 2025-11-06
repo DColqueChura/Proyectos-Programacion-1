@@ -3,7 +3,7 @@ import tempfile
 import os
 
 from src.errors import ErrorAperturaArchivo, ErrorDesconocido
-from src.funciones import obtener_args, leer_archivo, extraer_entrada_salida, exigir_csv, procesar_csv
+from src.funciones_toml_json import obtener_args, leer_archivo, extraer_entrada_salida, exigir_csv, procesar_csv
 
 #Comando para ejecutar: python -m unittest discover test
 
