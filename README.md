@@ -64,8 +64,14 @@ python -m unittest test.test_funciones
 ```
 
 Para C32 - proyecto integrador
+TODOS los test:
 ```bash
 python -m unittest discover -s test -p "test_*.py"
+```
+
+UNA subcarpeta de test en específico:
+```bash
+python -m unittest discover -s test/<subcarpeta de test "test_"> -p "test_*.py"
 ```
 ---
 
