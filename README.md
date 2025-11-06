@@ -120,11 +120,14 @@ C33 - proyecto_integrador/
 📊 Resultados Esperados (Proyecto Integrador)
 
 🧾 Archivo de entrada (ventas.csv)
+
+```csv
 Fecha,Producto,Cantidad,ValorUnitario
 2024-06-01,Peras,5,1.60
 2024-06-03,Manzanas,3,2.00
 2024-06-05,Peras,2,1.70
 2024-06-10,Naranjas,4,1.80
+```
 
 ⚙️ Archivo agrupado por producto (ventas_por_producto.csv)
 | Producto | Fecha de Inicio | Fecha Final | Cantidad | Valor Total |
