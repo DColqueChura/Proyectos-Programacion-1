@@ -34,7 +34,6 @@ Implementa un flujo completo que:
 * Incluye pruebas unitarias para todas las funciones y casos de error.
 
 ---
----
 
 ## ⚙️ Ejecución
 
