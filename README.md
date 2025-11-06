@@ -143,7 +143,7 @@ Fecha,Producto,Cantidad,ValorUnitario
 | Naranjas | 2024-06-10      | 2024-06-10  | 4        | 7.20        |
 | Manzanas | 2024-06-03      | 2024-06-03  | 3        | 6.00        |
 
-(orden descendente por Valor Total)
+### (orden descendente por Valor Total)
 ---
 
 💡 **Autor:** D. Colque Chura
